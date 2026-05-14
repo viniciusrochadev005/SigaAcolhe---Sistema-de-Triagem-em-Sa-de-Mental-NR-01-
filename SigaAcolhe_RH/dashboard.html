@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard RH | SigaAcolhe</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <span class="header-logo">🧠💚</span>
+            <span class="header-title">SigaAcolhe RH</span>
+            <span class="header-badge">NR-01</span>
+        </div>
+        <div class="header-right">
+            <select id="period-select" class="period-select">
+                <option value="7">Últimos 7 dias</option>
+                <option value="30" selected>Últimos 30 dias</option>
+                <option value="90">Últimos 90 dias</option>
+            </select>
+            <button id="logout-btn" class="btn-link">Sair</button>
+        </div>
+    </header>
+
+    <!-- Loading -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Carregando dados...</p>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container" id="main-content" style="display:none;">
+
+        <!-- Summary Cards -->
+        <section class="summary-grid">
+            <div class="stat-card total">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value" id="total-sessoes">0</div>
+                <div class="stat-label">Sessões Totais</div>
+            </div>
+            <div class="stat-card leve">
+                <div class="stat-icon">🟢</div>
+                <div class="stat-value" id="sessoes-leve">0</div>
+                <div class="stat-label">Risco Leve/Neutro</div>
+            </div>
+            <div class="stat-card moderado">
+                <div class="stat-icon">🟡</div>
+                <div class="stat-value" id="sessoes-moderado">0</div>
+                <div class="stat-label">Risco Moderado</div>
+            </div>
+            <div class="stat-card alto">
+                <div class="stat-icon">🔴</div>
+                <div class="stat-value" id="sessoes-alto">0</div>
+                <div class="stat-label">Risco Alto</div>
+            </div>
+        </section>
+
+        <!-- Charts Row -->
+        <section class="charts-row">
+            <div class="card chart-card">
+                <h3 class="card-title">Principais Problemas (NR-01)</h3>
+                <div class="chart-container">
+                    <canvas id="categorias-chart"></canvas>
+                </div>
+            </div>
+            <div class="card chart-card">
+                <h3 class="card-title">Tendência de Sessões</h3>
+                <div class="chart-container">
+                    <canvas id="tendencia-chart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Row -->
+        <section class="bottom-row">
+            <!-- Recomendações -->
+            <div class="card">
+                <h3 class="card-title">🎯 Recomendações Automáticas</h3>
+                <div id="recomendacoes-container">
+                    <p class="text-muted">Carregando recomendações...</p>
+                </div>
+            </div>
+
+            <!-- Sessões Recentes -->
+            <div class="card">
+                <h3 class="card-title">📋 Sessões Recentes</h3>
+                <div id="sessoes-recentes-container">
+                    <p class="text-muted">Carregando sessões...</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Score -->
+        <section class="score-section">
+            <div class="card score-card">
+                <h3 class="card-title">Índice de Sofrimento Geral</h3>
+                <div class="score-value" id="score-value">0.0</div>
+                <div class="score-bar-container">
+                    <div class="score-bar" id="score-bar" style="width:0%"></div>
+                </div>
+                <p class="text-muted" style="margin-top:8px;">Média de todas as sessões no período selecionado.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="js/supabase-config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
